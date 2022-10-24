@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from snapzapp.views import home
+from snapzapp.views import home, post
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('p/<slug:slug>', post, name='post')
 ]

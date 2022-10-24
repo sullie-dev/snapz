@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block  content%}
+  <div class = "container">
+    <div class="columns">
+        <div class="column">
+            <figure class="image is-4by5">
+                <img src="{{posts.image.url}}">
+              </figure>
+        </div>
+        <div class="column">
+            {%if not comments%}
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media-content">
+                        <p class="title is-4">No comments</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}   
+                {%for comment in comments%}
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media-content">
+                        <p class="title is-4">{{comment.comment_text}}</p>
+                        <time class="subtitle is-6" datetime="2016-1-1">{{comment.created_on}}</time>
+                        </div>
+                    </div>
+                    </div>
+                    <br>
+                {%endfor%}
+            {%endif%}
+        </div>
+    </div>
+  </div>
+    
+{% endblock  %}

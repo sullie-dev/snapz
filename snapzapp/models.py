@@ -20,7 +20,7 @@ def idGenerator():
 
 class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
-    post_id = models.CharField(max_length=30, default=idGenerator, unique=True )
+    post_id = models.CharField(max_length=30, default=idGenerator, unique=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="blog_posts"
     )
@@ -52,3 +52,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment {self.comment_text} - {self.name}"
+    
+    def number_of_comments(self):
+        return self.comments.count()
+    
