@@ -17,10 +17,11 @@ def idGenerator():
 
 # Create your models here.
 
+randString = idGenerator()
 
 class Post(models.Model):
-    slug = models.SlugField(max_length=200, unique=True)
-    post_id = models.CharField(max_length=30, default=idGenerator, unique=True)
+    slug = models.SlugField(max_length=200, default=randString, unique=True)
+    post_id = models.CharField(max_length=30, default=randString, unique=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="blog_posts"
     )

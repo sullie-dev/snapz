@@ -33,8 +33,8 @@ def viewPost(request, slug, *args, **kwargs):
 
 def comment(request, slug,  *args, **kwargs):
     post_id = slug
-    postQueryset = Post.objects.filter(post_id=post_id)
-    post = get_object_or_404(postQueryset, post_id=post_id)
+    postQueryset = Post.objects.filter(slug=slug)
+    post = get_object_or_404(postQueryset, slug=slug)
     comments = post.comments.filter(post=post).order_by("-created_on")
 
     comment_form = CommentForm(data=request.POST)
