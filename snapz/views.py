@@ -87,4 +87,11 @@ class AccoountView(View):
         user = User.objects.get(username=slug)
         posts = Post.objects.all().filter(author=user)
 
-        return render(request, 'account.html',  {'posts': posts})
+        return render(
+            request,
+            'account.html',  
+            {
+                'posts': posts,
+                'author': user
+            }
+        )

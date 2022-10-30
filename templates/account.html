@@ -2,17 +2,25 @@
 
 {%block content%}
 <div class="container">
+    {%if not posts%}
+    <h3 class="title is-3"> {{author}} has no posts yet, well this is awkward 🥲 </h3>
+
+    {% else %}
     <div class="columns">
         {% for post in posts%}
-            <div class="column">
+            <div class="column is-one-third">
                 <figure class="image is-1by1">
                     <img src="{{post.image.url}}">
                 </figure> 
                 <div>
-                    <span><i class="fa-solid fa-heart" style="font-size:15px;"></i>{{post.number_of_likes}}</span>
+                    <span>
+                        <i class="fa-solid fa-heart liked" style="font-size:15px;"></i><span class="like-padding">{{post.number_of_likes}}<span>
+                        <a href="/p/{{post.slug}}" class="post-link">View Post</a>
+                    </span>
                 </div>
             </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 {%endblock%}

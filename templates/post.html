@@ -4,22 +4,59 @@
 
   <div class = "container">
     <div class="columns">
-        <div class="column">
-            <figure class="image is-4by5">
-                <img src="{{posts.image.url}}">
-              </figure>
-        </div>
+        <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-square">
+                  <img src="{{posts.image.url}}" alt="Placeholder image" width="100%">
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <a href="/account/{{posts.author}}"><p class="title is-4">@{{posts.author}}</p></a>
+                  </div>
+                </div>
+                <div class="content">
+                  {{posts.description}}
+                  <br>
+                  <br>
+                  <div>
+                    {% if user.is_authenticated %}
+                    <form action="{% url 'post_like' posts.slug %}" method="POST">
+                        {% csrf_token %}
+                        {% if liked %}
+                            <button type="buttton is-white" name="post_id" value="{{post.slug}}" class="button is-white">
+                                <i class="fas fa-heart liked"></i>
+                                <span class="like-padding">{{posts.number_of_likes}}</span>
+                            </button>
+
+                        {% else %}
+                            <button type="buttton is-white" name="post_id" value="{{post.slug}}" class="button is-white">
+                                <i class="far fa-heart not-liked"></i>
+                                <span class="like-padding">{{posts.number_of_likes}}</span>
+                            </button>
+                            </a>
+                        {% endif %}
+                    </form> 
+                    <a href="/">
+                        <button type="buttton is-white" class="button is-white">
+                            Back
+                        </button>
+                    </a>
+                    {% else%}
+                    <i class="far fa-heart not-liked"></i><span class="like-padding">{{posts.number_of_likes}}</a>
+                    {% endif %}
+                    
+                  </div>
+                  <br>
+                    <time datetime="2016-1-1">{{posts.created_on}}</time>
+                </div>
+              </div>
+            </div>
+          </div>
         <div class="column">
             {% if user.is_authenticated %}
-            <form action="{% url 'post_like' posts.slug %}" method="POST">
-                {% csrf_token %}
-                {% if liked %}
-                    <button type="buttton is-white" name="post_id" value="{{post.slug}}" class="button is-white">Leave a like<i class="fas fa-heart liked"><span style="margin-left:15px:">{{post.number_of_likes}}</span></i></button>
-                {% else %}
-                    <button type="submit" name="post_id" value="{{post.slug}}" class="button is-white">Leave a like<i class="far fa-heart">{{post.number_of_likes}}</i></button>
-                {% endif %}
-            </form> 
-            <h3>Leave a comment:</h3>
                 <form method="post" style="margin-top: 1.3em;">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
@@ -29,16 +66,16 @@
                 <br>
             {% else %}
             <div class="card">
+                <div class="card">
                 <div class="card-content">
                     <div class="media-content">
-                    <p class="title is-4"><a href="/accounts/login">Login to leave a comment</a></p>
+                    <p class="title is-4"></span><a href="/accounts/login"> Login to leave a comment and a like</a></p>
                     </div>
                 </div>
             </div>
             <br>
             {% endif %}
             {%if not comments%}
-                <div class="card">
                     <div class="card-content">
                         <div class="media-content">
                         <p class="title is-4">No comments</p>
@@ -51,7 +88,7 @@
                     <div class="card-content">
                         <div class="media-content">
                         <p class="title is-4">{{comment.comment_text}}</p>
-                        <span> <a href="/account/{{comment.name}}">{{comment.name}}</a><time class="subtitle is-6" datetime="2016-1-1">{{comment.created_on}}</time>
+                        <a href="/account/{{comment.name}}">@{{comment.name}}</a><span class="like-padding"><time class="subtitle is-6" datetime="2016-1-1">{{comment.created_on}}</time>
                         </div>
                     </div>
                     </div>

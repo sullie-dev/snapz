@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-# from snapzapp.views import View
 from . import views
 
 
@@ -24,8 +23,8 @@ urlpatterns = [
     path('', views.PostList.as_view(), name='home'),
     path('p/<slug:slug>', views.PostDetail.as_view(), name='post'),
     path('like/<slug:slug>', views.PostLike.as_view(), name='post_like'),
+    path('accounts/', include('allauth.urls')),
     path('account/<slug:slug>', views.AccoountView.as_view(),  name="account"),
 
-    path('accounts/', include('allauth.urls')),
 
 ]
