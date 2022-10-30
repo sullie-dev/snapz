@@ -17,7 +17,9 @@ def idGenerator():
 
 # Create your models here.
 
+
 randString = idGenerator()
+
 
 class Post(models.Model):
     slug = models.SlugField(max_length=200, default=randString, unique=True)

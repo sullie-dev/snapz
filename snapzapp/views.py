@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
+
 from snapz.forms import CommentForm
 from snapzapp.models import Post, Comment
 
@@ -52,3 +54,15 @@ def comment(request, slug,  *args, **kwargs):
     }
 
     return render(request, 'post.html', context)
+
+
+def account(request, slug,  *args, **kwargs):
+    user = User.objects.get(username=slug)
+    posts = Post.objects.all().filter(author=user)
+
+    # comments = post.comments.filter(autor=user).order_by("-created_on")
+    context = {
+        'posts': posts
+        # 'comments': comments,
+    }
+    return render(request, 'account.html', context)

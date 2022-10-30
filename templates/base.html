@@ -32,6 +32,9 @@
             {% if user.is_authenticated %}
             <div class="navbar-item">
               <div class="buttons">
+                <a class="button is-white" href="account/{{ user.username }}">
+                  <i class="fa-regular fa-user" style="font-size:30px;"></i>
+                </a>
                 <a class="button is-dark" href="accounts/logout">
                   <strong>Log Out</strong>
                 </a>
