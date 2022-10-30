@@ -11,8 +11,16 @@
         </div>
         <div class="column">
             {% if user.is_authenticated %}
+            <form action="{% url 'post_like' posts.slug %}" method="POST">
+                {% csrf_token %}
+                {% if liked %}
+                    <button type="buttton is-white" name="post_id" value="{{post.slug}}" class="button is-white">Leave a like<i class="fas fa-heart liked"><span style="margin-left:15px:">{{post.number_of_likes}}</span></i></button>
+                {% else %}
+                    <button type="submit" name="post_id" value="{{post.slug}}" class="button is-white">Leave a like<i class="far fa-heart">{{post.number_of_likes}}</i></button>
+                {% endif %}
+            </form> 
             <h3>Leave a comment:</h3>
-                <form method="post" action="/c/{{posts.post_id}}" style="margin-top: 1.3em;">
+                <form method="post" style="margin-top: 1.3em;">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
                     <br>
@@ -43,7 +51,7 @@
                     <div class="card-content">
                         <div class="media-content">
                         <p class="title is-4">{{comment.comment_text}}</p>
-                        <time class="subtitle is-6" datetime="2016-1-1">{{comment.created_on}}</time>
+                        <span> <a href="/account/{{comment.name}}">{{comment.name}}</a><time class="subtitle is-6" datetime="2016-1-1">{{comment.created_on}}</time>
                         </div>
                     </div>
                     </div>

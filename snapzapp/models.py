@@ -25,13 +25,13 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, default=randString, unique=True)
     post_id = models.CharField(max_length=30, default=randString, unique=True)
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="blog_posts"
+        User, on_delete=models.CASCADE, related_name="posts"
     )
     image = CloudinaryField('image', default='placeholder')
     description = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(
-        User, related_name='blogpost_like', blank=True)
+        User, related_name='post_like', blank=True)
 
     class Meta:
         ordering = ["-created_on"]
@@ -55,7 +55,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment {self.comment_text} - {self.name}"
-    
-    def number_of_comments(self):
-        return self.comments.count()
-    

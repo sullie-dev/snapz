@@ -1,3 +1,7 @@
-.spacer{
+.spacer {
     margin: 0, 100px;
+}
+
+.liked {
+    color: red;
 }

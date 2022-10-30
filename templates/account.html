@@ -7,7 +7,10 @@
             <div class="column">
                 <figure class="image is-1by1">
                     <img src="{{post.image.url}}">
-                </figure>        
+                </figure> 
+                <div>
+                    <span><i class="fa-solid fa-heart" style="font-size:15px;"></i>{{post.number_of_likes}}</span>
+                </div>
             </div>
         {% endfor %}
     </div>

@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Snapz</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel='stylesheet' href={% static '/css/styles.css'%}>
     <script src="https://kit.fontawesome.com/ea76a89a44.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 
 </head>
 <body>
@@ -32,7 +33,7 @@
             {% if user.is_authenticated %}
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button is-white" href="account/{{ user.username }}">
+                <a class="button is-white" href="/account/{{ user.username }}">
                   <i class="fa-regular fa-user" style="font-size:30px;"></i>
                 </a>
                 <a class="button is-dark" href="accounts/logout">
