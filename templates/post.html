@@ -1,6 +1,7 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block  content%}
 
-{% block  content%}
+{% load crispy_forms_tags %}
+
   <div class = "container">
     <div class="columns">
         <div class="column">
@@ -9,6 +10,25 @@
               </figure>
         </div>
         <div class="column">
+            {% if user.is_authenticated %}
+            <h3>Leave a comment:</h3>
+                <form method="post" action="/c/{{posts.post_id}}" style="margin-top: 1.3em;">
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
+                    <br>
+                    <button type="submit" class="button is-link">Submit</button>
+                </form>
+                <br>
+            {% else %}
+            <div class="card">
+                <div class="card-content">
+                    <div class="media-content">
+                    <p class="title is-4"><a href="/accounts/login">Login to leave a comment</a></p>
+                    </div>
+                </div>
+            </div>
+            <br>
+            {% endif %}
             {%if not comments%}
                 <div class="card">
                     <div class="card-content">

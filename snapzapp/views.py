@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Post, Comment
+from django.shortcuts import render, get_object_or_404, reverse
+from django.http import HttpResponseRedirect
+from snapz.forms import CommentForm
+from snapzapp.models import Post, Comment
 
 
 # Create your views here.
@@ -8,18 +10,45 @@ from .models import Post, Comment
 def home(request):
     posts = Post.objects.all()
     context = {
+        'posts': posts
+    }
+    context = {
         'posts': posts,
     }
     return render(request, 'index.html',  context)
 
 
-def post(request, slug, *args, **kwargs):
+def viewPost(request, slug, *args, **kwargs):
     postQueryset = Post.objects.filter(slug=slug)
     post = get_object_or_404(postQueryset, slug=slug)
-    comment = post.comments.filter(post=post).order_by("-created_on")
+    comments = post.comments.filter(post=post).order_by("-created_on")
+
     context = {
         'posts': post,
-        'comments': comment
+        'comments': comments,
+        'comment_form': CommentForm()
     }
-    print(comment)
+    return render(request, 'post.html', context)
+
+
+def comment(request, slug,  *args, **kwargs):
+    post_id = slug
+    postQueryset = Post.objects.filter(post_id=post_id)
+    post = get_object_or_404(postQueryset, post_id=post_id)
+    comments = post.comments.filter(post=post).order_by("-created_on")
+
+    comment_form = CommentForm(data=request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.post = post
+        comment.save()
+    else:
+        comment_form = CommentForm()
+
+    context = {
+        'posts': post,
+        'comments': comments,
+        'comment_form': CommentForm()
+    }
+
     return render(request, 'post.html', context)

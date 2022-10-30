@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from snapzapp.views import home, post
+from snapzapp.views import home, viewPost, comment
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('p/<slug:slug>', post, name='post'),
+    path('p/<slug:slug>', viewPost, name='post'),
+    path('c/<slug:slug>', comment, name="comment"),
     path('accounts/', include('allauth.urls'))
 
 ]
