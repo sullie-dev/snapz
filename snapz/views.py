@@ -75,16 +75,7 @@ class PostDetail(View):
         else:
             comment_form = CommentForm()
 
-        return render(
-            request,
-            "post.html",
-            {
-                "post": post,
-                "comments": comments,
-                "comment_form": comment_form,
-                "liked": liked
-            },
-        )
+        return HttpResponseRedirect(reverse('post', args=[slug]))
 
 
 class PostLike(View):
@@ -130,7 +121,7 @@ class AccoountView(View):
 
         return render(
             request,
-            'account.html',  
+            'account.html',
             {
                 'posts': posts,
                 'author': user

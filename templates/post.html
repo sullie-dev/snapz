@@ -23,7 +23,7 @@
                   <br>
                   <div>
                     {% if user.is_authenticated %}
-                    <form action="{% url 'post_like' %}" method="POST">
+                    <form action="{% url 'post_like' posts.post_id %}" method="POST">
                         {% csrf_token %}
                         {% if liked %}
                             <button type="buttton is-white" name="post_id" value="{{post.slug}}" class="button is-white">
@@ -41,7 +41,7 @@
                     </form> 
                     <a href="/">
                         <button type="buttton is-white" class="button is-white">
-                            Back
+                            View all posts
                         </button>
                     </a>
                     {% else%}
@@ -57,7 +57,7 @@
           </div>
         <div class="column">
             {% if user.is_authenticated %}
-                <form method="post" style="margin-top: 1.3em;">
+                <form action="{% url 'post' posts.post_id %}" method="POST" style="margin-top: 1.3em;">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
                     <br>
