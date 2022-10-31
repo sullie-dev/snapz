@@ -1,9 +1,25 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse,redirect
 from django.views import generic, View
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from snapzapp.models import Post, Comment
-from .forms import CommentForm
+from .forms import CommentForm, PostForm
+import random
+import string
+
+
+def idGenerator():
+    upper_string = string.ascii_uppercase
+    lower_string = string.ascii_lowercase
+    numerical = string.digits
+
+    alphabet = upper_string + lower_string + numerical
+    random_character = random.sample(alphabet, 10)
+    slug = "".join(random_character)
+    return slug
+
+
+randString = idGenerator()
 
 
 class PostList(generic.ListView):
@@ -80,6 +96,31 @@ class PostLike(View):
             post.likes.add(request.user)
 
         return HttpResponseRedirect(reverse('post', args=[slug]))
+
+
+class PostNewImage(View):
+    def get(self, request):
+        return render(
+                request,
+                "new.html",
+                {
+                    "post_form": PostForm
+                }
+                )
+
+    def post(self, request, *args, **kwargs):
+        post_form = PostForm(request.POST, request.FILES)
+        if post_form.is_valid():
+            post_form.instance.author = request.user
+            post_form.instance.slug = randString
+            post_form.instance.post_id = randString
+            post = post_form.save(commit=False)
+            post.save()
+            print(request.FILES)
+        else:
+            post_form = PostForm()
+
+        return HttpResponseRedirect(reverse('home'))
 
 
 class AccoountView(View):

@@ -23,7 +23,7 @@
                   <br>
                   <div>
                     {% if user.is_authenticated %}
-                    <form action="{% url 'post_like' posts.slug %}" method="POST">
+                    <form action="{% url 'post_like' %}" method="POST">
                         {% csrf_token %}
                         {% if liked %}
                             <button type="buttton is-white" name="post_id" value="{{post.slug}}" class="button is-white">
