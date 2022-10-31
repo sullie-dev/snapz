@@ -33,9 +33,9 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["snapzapp.herokuapp.com", "localhost"]
+ALLOWED_HOSTS = ["snapzapp.herokuapp.com", "localhost", "sulliedev-snapz-fgllj1xl267.ws-eu73.gitpod.io"]
 
 
 # Application definition

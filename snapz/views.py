@@ -127,3 +127,8 @@ class AccoountView(View):
                 'author': user
             }
         )
+
+
+class Error404Page(View):
+    def get(request):
+        return render('error.html')
