@@ -23,13 +23,9 @@ randString = idGenerator()
 
 
 class PostList(generic.ListView):
-    def get(self, request,  *args, **kwargs):
-        model = Post
-        posts = Post.objects.all
-        template_name = "index.html"
-
-        # posts = Post.objects.all()
-        return render(request, 'index.html',  {'posts': posts})
+    model = Post
+    queryset = Post.objects.all()
+    template_name = "index.html"
 
 
 class PostDetail(View):
@@ -63,7 +59,7 @@ class PostDetail(View):
         liked = False
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
-     
+
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             comment_form.instance.name = request.user.username
@@ -93,9 +89,8 @@ class PostNewImage(View):
                 request,
                 "new.html",
                 {
-                    "post_form": PostForm
-                }
-                )
+                    "post_form": PostForm()
+                })
 
     def post(self, request, *args, **kwargs):
         post_form = PostForm(request.POST, request.FILES)
@@ -105,7 +100,6 @@ class PostNewImage(View):
             post_form.instance.post_id = randString
             post = post_form.save(commit=False)
             post.save()
-            print(request.FILES)
         else:
             post_form = PostForm()
 
