@@ -35,8 +35,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["snapzapp.herokuapp.com", "localhost", "sulliedev-snapz-fgllj1xl267.ws-eu73.gitpod.io"]
+ALLOWED_HOSTS = ['snapzapp.herokuapp.com', 'localhost', ]
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Application definition
 
@@ -47,13 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
     'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'snapzapp',
 ]
 
@@ -95,13 +96,6 @@ WSGI_APPLICATION = 'snapz.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 DATABASES = {
@@ -149,7 +143,6 @@ MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATIC_URL = '/static/'
-
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

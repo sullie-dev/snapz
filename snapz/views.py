@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, reverse,redirect
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -24,14 +24,12 @@ randString = idGenerator()
 
 class PostList(generic.ListView):
     def get(self, request,  *args, **kwargs):
-        posts = Post.objects.all()
-        return render(
-            request,
-            'index.html',
-            {
-                'posts': posts
-            }
-        )
+        model = Post
+        posts = Post.objects.all
+        template_name = "index.html"
+
+        # posts = Post.objects.all()
+        return render(request, 'index.html',  {'posts': posts})
 
 
 class PostDetail(View):
@@ -65,7 +63,7 @@ class PostDetail(View):
         liked = False
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
-        
+     
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             comment_form.instance.name = request.user.username
@@ -127,8 +125,3 @@ class AccoountView(View):
                 'author': user
             }
         )
-
-
-class Error404Page(View):
-    def get(request):
-        return render('error.html')

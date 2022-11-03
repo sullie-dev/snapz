@@ -27,5 +27,3 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('account/<slug:slug>', views.AccoountView.as_view(),  name="account"),
 ]
-
-handler404 = views.Error404Page.as_view()
